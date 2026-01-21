@@ -1,4 +1,7 @@
+#pragma once
 #include <string>
+#include <ctime>
+
 using namespace std;
 
 
@@ -10,7 +13,7 @@ enum Task_type
 
 };
 
-string enum_to_string(Task_type task)
+inline string enum_to_string(Task_type task)
 {
     switch(task)
     {
@@ -21,3 +24,11 @@ string enum_to_string(Task_type task)
     return NULL;
 }
 
+class Task{
+    string id;
+    string employee_id;
+    string pet_id;
+    Task_type task_type;
+    time_t start_time;
+    int duration;
+};
