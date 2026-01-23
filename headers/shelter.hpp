@@ -5,6 +5,7 @@
 #include "task.hpp"
 #include <ctime>
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
@@ -23,7 +24,12 @@ class Shelter{
         bool update();
         void show_pet_stats(Pet* pet);
         void show_pets_stats();
-        vector<Pet*> get_pets();
+        void show_employes();
+        void addNewTask(const string& employee_id, Task_type task_type, int duration);
+        void showTasks();
+        vector<Task> getTasks(){return this->tasks;};
+        vector<Pet*> get_pets(){return this->pets;};
+        vector<Employee*> get_employes(){return this->employes;};
 
 
 };

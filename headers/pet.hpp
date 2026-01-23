@@ -15,8 +15,8 @@ class Pet : public Entity{
         int attractivenes; // 1000
         bool isAlive = true;
     public:
-        Pet(string& id, string& name);
-        Pet(string& id, string& name, int attractivenes, int hunger, int happines); 
+        Pet(const string& id, const string& name);
+        Pet(const string& id, const string& name, int attractivenes, int hunger, int happines); 
         void name_pet(string name);
         void increase_happines(int amount);
         void update_happines();
@@ -27,6 +27,7 @@ class Pet : public Entity{
         int get_attractivenes(){return this->attractivenes;}
         int get_hunger(){return this->hunger;}
         int get_happines(){return this->happines;}
+        bool get_alive_status(){return this->isAlive;}
         static void get_names_from_file();
 
 

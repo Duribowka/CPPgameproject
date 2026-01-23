@@ -29,6 +29,38 @@ bool Shelter::update()
             pet->update_hunger();
             pet->update_happines();
         }
+        
+        vector<Task> tasks_to_delete;
+        for(Task task: tasks)
+        {
+            int passed_time_spent_on_work = 0;
+            if(deltaTime >= task.duration)
+            {
+                passed_time_spent_on_work = task.duration;
+            }
+            else if(deltaTime < task.duration)
+            {
+                passed_time_spent_on_work = deltaTime;
+            }
+            if(task.task_type == FEED)
+            {
+                for(Pet* pet : pets)
+                {
+                    
+                    pet->feed(passed_time_spent_on_work * 10);
+            
+                }
+            }
+            task.duration-=passed_time_spent_on_work;
+            if(task.duration == 0)
+            {
+                tasks_to_delete.push_back(task);
+            }
+        }
+        for(Task task: tasks_to_delete)
+        {
+            tasks.erase(find(tasks.begin(),tasks.end(),task));
+        }
         return true;
     }
     return false;
@@ -37,9 +69,11 @@ bool Shelter::update()
 
 void Shelter::show_pet_stats(Pet* pet)
 {
+    cout << "Alive: " << pet->get_alive_status() << endl;
     cout <<"attractivenes: " << pet->get_attractivenes() << endl;
     cout <<"hunger: " << pet->get_hunger() << endl;
     cout <<"happines: " << pet->get_happines() << endl;
+    
 }
 
 void Shelter::show_pets_stats()
@@ -50,7 +84,31 @@ void Shelter::show_pets_stats()
         show_pet_stats(pet);
     }
 }
-vector<Pet*> Shelter::get_pets()
+
+void Shelter::addNewTask(const string& employee_id, Task_type task_type, int duration)
 {
-    return this->pets;
+    
+    this->tasks.push_back(Task(to_string(this->tasks.size()),employee_id,task_type,duration));
+
+}
+
+void Shelter::showTasks()
+{
+    for(Task task: tasks)
+    {    
+        cout << task.id << " " << task.employee_id << " " << task.task_type << " "  << task.duration << endl;
+    }
+}
+
+void Shelter::show_employes()
+{
+
+    for(Employee* empl : employes)
+    {
+        cout << "id: " << empl->get_id() <<endl;
+        cout << "name: " << empl->get_name() <<endl;
+        cout << "grooming skill: " << empl->get_grooming_skill_level() <<endl;
+        cout << "marketing skill: " << empl->get_marketing_skill_level() <<endl;
+        cout << "caretaking skill: " << empl->get_caretaking_skill_level() <<endl;
+    }
 }

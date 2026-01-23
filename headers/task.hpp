@@ -9,7 +9,8 @@ enum Task_type
 {
     GROOM,
     ADVERTISE,
-    TAKE_CARE
+    TAKE_CARE,
+    FEED
 
 };
 
@@ -25,10 +26,17 @@ inline string enum_to_string(Task_type task)
 }
 
 class Task{
-    string id;
-    string employee_id;
-    string pet_id;
-    Task_type task_type;
-    time_t start_time;
-    int duration;
+    
+    public:
+        string id;
+        string employee_id;
+        Task_type task_type;
+        int duration;    
+        Task(const string& id, const string& employee_id, Task_type task_type, int duration):
+        id(id), employee_id(employee_id), task_type(task_type), duration(duration){}
+        bool operator==(const Task& other) const {return id == other.id;}
+        
+
+
 };
+

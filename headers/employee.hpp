@@ -8,7 +8,7 @@ class Employee : public Entity
     public:
         static vector<string> names;
     private: 
-        float salary;
+        int salary;
         int grooming_skill_level;
         int marketing_skill_level;
         int caretaking_skill_level;
@@ -18,7 +18,13 @@ class Employee : public Entity
         int work_cost;
 
     public:
+        Employee(const string& id, const string& name);
+        Employee(const string& id, const string& name, int grooming_skill_level, int marketing_skill_level, int caretaking_skill_level, int salary);
         void work(int hours);
         void assignTask(int work_cost, time_t startTime);
         static void get_names_from_file();
+        int get_grooming_skill_level(){return this->grooming_skill_level;}
+        int get_marketing_skill_level(){return this->marketing_skill_level;}
+        int get_caretaking_skill_level(){return this->caretaking_skill_level;}
+        int get_salary(){return this->salary;}
 };

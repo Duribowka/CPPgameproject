@@ -2,15 +2,22 @@
 #include <fstream>
 vector<string> Pet::names;
 
-Pet::Pet(string& id, string& name) : Entity(id,name)
+Pet::Pet(const string& id, const string& name) : Entity(id,name)
 {
     this->happines = rand() % 1001;
     this->hunger = 10 + rand() % 91;
     this->attractivenes = rand() % 1001;
 }
 
-Pet::Pet(string& id, string& name, int attractivenes, int hunger, int happines) 
-: Entity(id,name), attractivenes(attractivenes), hunger(hunger), happines(happines){}
+Pet::Pet(const string& id, const string& name, int attractivenes, int hunger, int happines) 
+: Entity(id,name), attractivenes(attractivenes), hunger(hunger), happines(happines)
+{
+    if(this->hunger>=100)
+    {
+        this->isAlive = false;
+        this->hunger = 100;
+    }
+}
 
 void Pet::name_pet(string name)
 {
@@ -30,45 +37,62 @@ void Pet::get_names_from_file()
 
 void Pet::increase_happines(int amount)
 {
-    this->happines += amount;
-    if(this->happines > 1000)
+    if(this->isAlive)
     {
-        this->happines = 1000;
+        this->happines += amount;
+        if(this->happines > 1000)
+        {
+            this->happines = 1000;
+        }
     }
 }
 
 void Pet::update_happines()
 {
-    this->happines--;
-    if(this->happines < 0)
+    if(this->isAlive)
     {
-        this->happines = 0;
+        this->happines--;
+        if(this->happines < 0)
+        {
+            this->happines = 0;
+        }
     }
 }
 
 void Pet::feed(int amount)
 {
-    this->hunger -= amount;
-    if(this->hunger < 0)
+
+    if(this->isAlive)
     {
-        this->hunger = 0;
+        this->hunger -= amount;
+        if(this->hunger < 0)
+        {
+            this->hunger = 0;
+        }
     }
 }
 
 void Pet::update_hunger()
 {
-    this->hunger++;
-    if(this->hunger >= 100)
+    if(this->isAlive)
     {
-        this->isAlive = false;
+        this->hunger++;
+        if(this->hunger >= 100)
+        {
+            this->isAlive = false;
+            this->hunger = 100;
+        }
     }
 }
 
 void Pet::update_attractivenes()
 {
-    this->attractivenes--;
-    if(this->attractivenes < 0)
+    if(this->isAlive)
     {
-        this->attractivenes = 0;
+        this->attractivenes--;
+        if(this->attractivenes < 0)
+        {
+            this->attractivenes = 0;
+        }
     }
 }
