@@ -23,7 +23,7 @@ class Pet : public Entity{
         void feed(int amount);
         void update_hunger();
         void update_attractivenes();
-        void groom(){this->attractivenes = 1000;}
+        void groom(int amount){this->attractivenes += amount; if(this->attractivenes > 1000) this->attractivenes=1000;}
         int get_attractivenes(){return this->attractivenes;}
         int get_hunger(){return this->hunger;}
         int get_happines(){return this->happines;}

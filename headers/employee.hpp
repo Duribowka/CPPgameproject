@@ -18,6 +18,7 @@ class Employee : public Entity
         int work_cost;
 
     public:
+        Employee(){};
         Employee(const string& id, const string& name);
         Employee(const string& id, const string& name, int grooming_skill_level, int marketing_skill_level, int caretaking_skill_level, int salary);
         void work(int hours);

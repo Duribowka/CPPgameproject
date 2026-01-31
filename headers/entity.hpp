@@ -11,6 +11,7 @@ class Entity {
         string id;
         string name;
     public:
+        Entity(){};
         Entity(const string& id, const string& name): id(id), name(name){}
         string get_id(){return this->id;}
         string get_name(){return this->name;}
