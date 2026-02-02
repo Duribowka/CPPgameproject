@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 enum Task_type
 {
     ERROR,

@@ -3,11 +3,6 @@
 #include <fstream>
 #include <string>
 #include "../headers/shelter.hpp"
-#include "../headers/pet.hpp"
-#include "../headers/employee.hpp"
-#include "../headers/task.hpp"
-
-
 
 using namespace std;
 
