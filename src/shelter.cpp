@@ -1,5 +1,6 @@
 #include "../headers/shelter.hpp"
 
+//This function is the constructor for the Shelter, restoring its saved state
 Shelter::Shelter(time_t prev_time, time_t current_time, time_t prev_income_time,
                  int bank_account, int montly_income)
 {
@@ -10,23 +11,28 @@ Shelter::Shelter(time_t prev_time, time_t current_time, time_t prev_income_time,
     this->monthly_income = monthly_income;
 }
 
+//This function adds a pet to the shelter's list of pets
 void Shelter::addPet(Pet* pet)
 {
     pets.push_back(pet);
 }
 
+//This function adds an employee to the shelter's list of employees
 void Shelter::addEmployee(Employee* employee)
 {
     employes.push_back(employee);
 }
 
+//This function updates the state of the shelter based on the time passed since the last update
 bool Shelter::update()
 {
+    //Calculating the number of hours passed since the last update by converting real world seconds into hours
     time_t deltaTime = (current_time - prev_time) / 3600;
     cout << "hours since last enterence: " << deltaTime << endl;
 
     if (deltaTime > 0)
     {
+        //This loop updates each pet's stats for every hour that has passed (pet decay)
         for (int i = 0; i < deltaTime; i++)
             for (Pet* pet : pets)
             {
@@ -35,10 +41,12 @@ bool Shelter::update()
                 pet->update_happines();
             }
 
+        //Store tasks that are completed to delete them after processing
         vector<Task*> tasks_to_delete;
 
         for (Task* task : tasks)
         {
+            //Find the employee assigned to the current task
             Employee curr_employee;
 
             for (Employee* temp_emp : employes)
@@ -47,6 +55,7 @@ bool Shelter::update()
                     curr_employee = *temp_emp;
             }
 
+            //Determine how much time the employee mustg spend on the task
             int passed_time_spent_on_work = 0;
             passed_time_spent_on_work =
                 (deltaTime >= task->duration) ? task->duration : deltaTime;

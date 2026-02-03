@@ -2,6 +2,7 @@
 #include <fstream>
 vector<string> Pet::names;
 
+//This function creates a pet with randomly generated stats
 Pet::Pet(const string& id, const string& name) : Entity(id,name)
 {
     this->happines = rand() % 1001;
@@ -9,6 +10,7 @@ Pet::Pet(const string& id, const string& name) : Entity(id,name)
     this->attractivenes = rand() % 1001;
 }
 
+//This function creates a pet with given stats, it also ensures that dead pets stay dead after loading
 Pet::Pet(const string& id, const string& name, int attractivenes, int hunger, int happines) 
 : Entity(id,name), attractivenes(attractivenes), hunger(hunger), happines(happines)
 {
@@ -19,11 +21,13 @@ Pet::Pet(const string& id, const string& name, int attractivenes, int hunger, in
     }
 }
 
+//This function allows naming the pet after creation, however it is not used as of right now
 void Pet::name_pet(string name)
 {
     this->name = name;
 }
 
+//This function reads pet names from a file and stores them for random name assignment, however it is not used as of right now
 void Pet::get_names_from_file()
 {
     ifstream pet_names_file;
@@ -35,6 +39,7 @@ void Pet::get_names_from_file()
     }
 }
 
+//This function raises happiness via the task, happiness is capped at 1000
 void Pet::increase_happines(int amount)
 {
     if(this->isAlive)
@@ -47,6 +52,7 @@ void Pet::increase_happines(int amount)
     }
 }
 
+//This function decreases happiness over time, happiness cannot go below 0
 void Pet::update_happines()
 {
     if(this->isAlive)
@@ -59,6 +65,7 @@ void Pet::update_happines()
     }
 }
 
+//This function reduces hunger via feed task, hunger cannot go below 0
 void Pet::feed(int amount)
 {
 
@@ -72,6 +79,7 @@ void Pet::feed(int amount)
     }
 }
 
+//This function increases hunger over time, if hunger reaches 100 the pet dies permanently
 void Pet::update_hunger()
 {
     if(this->isAlive)
@@ -85,6 +93,7 @@ void Pet::update_hunger()
     }
 }
 
+//This function decreases attractiveness over time, attractiveness cannot go below 0
 void Pet::update_attractivenes()
 {
     if(this->isAlive)

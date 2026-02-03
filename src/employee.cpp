@@ -2,6 +2,7 @@
 #include <fstream>
 vector<string> Employee::names;
 
+//This function creates an employee with random skill levels and salary based on their skill levels + random factor :D
 Employee::Employee(const string& id, const string& name) : Entity(id,name)
 {
     
@@ -18,6 +19,7 @@ Employee::Employee(const string& id, const string& name) : Entity(id,name)
     ) * 100;
 }
 
+//This function creates an employee with given skill levels and salary, as a result saved employees are saved correctly
 Employee::Employee(const string& id, const string& name, int grooming_skill_level, int marketing_skill_level, int caretaking_skill_level, int salary) : 
     Entity(id,name), 
     grooming_skill_level(grooming_skill_level), 
@@ -25,6 +27,7 @@ Employee::Employee(const string& id, const string& name, int grooming_skill_leve
     caretaking_skill_level(caretaking_skill_level),
     salary(salary){};
 
+//This function reduces the work capacity of the employee when they work by tracking hours worked
 void Employee::work(int hours)
         {
             work_capacity -= hours;
@@ -33,13 +36,16 @@ void Employee::work(int hours)
                 work_capacity = 0;
             }
         }
-        
+
+//This function assigns a task to the employee, setting their work cost and the time the task was assigned, however it is not used as of right now
 void Employee:: assignTask(int work_cost, time_t startTime)
         {
             this->work_cost = work_cost;
             this->last_order_given = startTime;
             this->isFree = false;
         }
+
+//This function reads employee names from a file and stores them for random name assignment, however it is not used as of right now
 void Employee::get_names_from_file()
 {
     ifstream employee_names_file;
