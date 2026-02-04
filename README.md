@@ -91,12 +91,12 @@ hunger: xx
 happines: xx
 ...        <-- all pets are printed
 id: 0     <-- first employee and his skill levels
-name: <name> <surname>
+name: 'name' 'surname'
 grooming skill: x
 marketing skill: x
 caretaking skill: x
 id: 2     <-- second employee and his skill levels
-name: <name> <surname>
+name: 'name' 'surname'
 grooming skill: x
 marketing skill: x
 caretaking skill: x

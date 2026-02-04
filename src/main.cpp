@@ -14,15 +14,15 @@ int main(int argc, char** argv)
     ifstream game_data;
     Pet::get_names_from_file();
     Employee::get_names_from_file();
-    game_data.open("game_data.txt");
+    game_data.open("game_data.txt");  //Open the last saved game state
     
+    //When was the last run
     getline(game_data,line);
-
     time_t prev_time = stoi(line,0,10);
     time_t timestamp; 
     time(&timestamp);
 
-
+    //Monthly income and salaries processed last time
     getline(game_data,line);
     time_t prev_inc_time = stoi(line,0,10);
 
@@ -31,12 +31,14 @@ int main(int argc, char** argv)
     getline(game_data,line);
     int monthly_income = stoi(line,0,10);
 
+    //Creating new shelter
     Shelter shelter(prev_time,timestamp,prev_inc_time,bank_account,monthly_income);
     
-
+    //How many pets?
     getline(game_data,line);
     int pet_count = stoi(line,0,10);
 
+    //Reading pets from the last save and creating them again
     for(int i = 0; i< pet_count; i++)
     {   
         int temp_at;
@@ -54,9 +56,11 @@ int main(int argc, char** argv)
 
     }
 
+    //How many employees?
     getline(game_data,line);
     int employes_count = stoi(line,0,10);
 
+    //Reading employees from the last save and creating them again
     for(int i = 0; i< employes_count; i++)
     {   
         int temp_gr;
@@ -76,6 +80,7 @@ int main(int argc, char** argv)
 
     }
 
+    //Loading active tasks
     if(getline(game_data,line))
     {
         int task_count = stoi(line,0,10);
@@ -95,9 +100,10 @@ int main(int argc, char** argv)
 
     game_data.close();
     
+    //Update shelter state based on how much time have passed --> applying stat changes, processing tasks, paying salaries...
     bool update = shelter.update();
     
-    if(argc > 1) //employee_id task_type duration ./shelter 0 FEED 5
+    if(argc > 1) //employee_id task_type duration ./game 0 FEED 5
     {
         
         Task_type tsk = string_to_enum(string(argv[2]));
@@ -111,6 +117,7 @@ int main(int argc, char** argv)
     
     if(true)
     {
+        //Saving current game data to the 'game_data.txt'
         ofstream game_data;
         game_data.open("game_data.txt", ios::out | ios::trunc);
         if(update)
@@ -157,6 +164,8 @@ int main(int argc, char** argv)
         }
         game_data.close();
     }
+
+    //Displaying current stats in the shelter
     shelter.show_pets_stats();
     shelter.show_employes();
     shelter.showTasks();

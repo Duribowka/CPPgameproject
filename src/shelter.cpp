@@ -62,6 +62,7 @@ bool Shelter::update()
 
             switch (task->task_type)
             {
+                //If attractiveness is below 900, pet will be groomed --> increased attractiveness
                 case GROOM:
                 {
                     for (Pet* pet : pets)
@@ -110,6 +111,7 @@ bool Shelter::update()
                     break;
                 }
 
+                //If attractiveness and happiness are high, pet may get adopted --> removed from shelter, either way, income might be increased
                 case ADVERTISE:
                 {
                     float mark_coef =
@@ -148,6 +150,7 @@ bool Shelter::update()
                     break;
                 }
 
+                //Pets happiness is increased until it reaches 1000
                 case TAKE_CARE:
                 {
                     for (Pet* pet : pets)
@@ -161,6 +164,7 @@ bool Shelter::update()
                     break;
                 }
 
+                //Pets hunger is decreased until it reaches 0
                 case FEED:
                 {
                     for (Pet* pet : pets)
@@ -172,6 +176,7 @@ bool Shelter::update()
                 }
             }
 
+            //Mark task for deletion if it's completed
             if (task->duration <= 0)
                 tasks_to_delete.push_back(task);
         }
@@ -184,6 +189,7 @@ bool Shelter::update()
         struct tm* tm_prev_inc = localtime(&prev_income_time);
         struct tm* tm_cur_time = localtime(&current_time);
 
+        //If month has changed, update bank account with income and salaries
         if (abs(tm_cur_time->tm_mon - tm_prev_inc->tm_mon) > 0)
         {
             bank_account += monthly_income;
@@ -196,12 +202,15 @@ bool Shelter::update()
                 bank_account -= temp_emp->get_salary();
             }
         }
-
+        
+        //Time has been successfully processed
         return true;
     }
+    //No update
     return false;
 }
 
+//This function displays the stats of a pet
 void Shelter::show_pet_stats(Pet* pet)
 {
     cout << "Alive: " << pet->get_alive_status() << endl;
@@ -210,6 +219,7 @@ void Shelter::show_pet_stats(Pet* pet)
     cout << "happines: " << pet->get_happines() << endl;
 }
 
+//This function displays the stats of all pets in the shelter
 void Shelter::show_pets_stats()
 {
     int i = 1;
@@ -220,12 +230,14 @@ void Shelter::show_pets_stats()
     }
 }
 
+//this function adds a new task to an employee if they are free
 void Shelter::addNewTask(const string& employee_id,
                          Task_type task_type,
                          int duration)
 {
     for (Task* temp_task : tasks)
-    {
+    {   
+        //Check if employee is already assigned to a task
         if (temp_task->employee_id.compare(employee_id) == 0)
         {
             cout << "Current Employee is already bussy" << endl;
@@ -241,6 +253,7 @@ void Shelter::addNewTask(const string& employee_id,
     );
 }
 
+//This function displays all current tasks in the shelter
 void Shelter::showTasks()
 {
     for (Task* task : tasks)
@@ -252,6 +265,7 @@ void Shelter::showTasks()
     }
 }
 
+//This function displays all employees in the shelter
 void Shelter::show_employes()
 {
     for (Employee* empl : employes)
